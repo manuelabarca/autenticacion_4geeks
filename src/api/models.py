@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import random
 
 db = SQLAlchemy()
 
@@ -17,3 +18,20 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+    
+    def getUser(email, password):
+        user = User.query.filter_by(email=email, password=password).first()
+        return user
+
+    def create(email, password, is_active):
+        user = User(email=email, password=password, is_active=is_active)
+        db.session.add(user)
+        db.session.commit()
+
+    def randomPassword(email):
+        user = User.query.filter_by(email=email).first()
+        password = ''.join((random.choice('abcdxyzpqr') for i in range(5)))
+        user.password = password
+        db.session.commit()
+
+        return password
