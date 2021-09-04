@@ -35,7 +35,7 @@ app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'apikey'
-app.config['MAIL_PASSWORD'] = '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'
+app.config['MAIL_PASSWORD'] = ''
 app.config['MAIL_DEFAULT_SENDER'] = 'labarca.manu@gmail.com'
 mail = Mail(app)
 #Add JWT
