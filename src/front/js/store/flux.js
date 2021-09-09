@@ -13,7 +13,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			api: "https://3001-yellow-tiger-u31dvvqm.ws-us16.gitpod.io",
+			isAuthenticate: false
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -41,6 +43,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			login: (email, password) => {
+				const store = getStore();
+
+				fetch(`${store.api}/api/login`, {
+					method: "POST",
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify({
+						email: email,
+						password: password
+					})
+				})
+					.then(resp => {
+						if (resp.ok) {
+							return resp.json();
+						}
+					})
+					.then(data => {
+						localStorage.setItem("token", data.token);
+						setStore({ isAuthenticate: true });
+					});
+			},
+			signOut: () => {
+				localStorage.removeItem("token");
+				setStore({ isAuthenticate: false });
+			},
+
+			verifySession: () => {
+				let token = localStorage.getItem("token");
+				if (token && token.length > 0) {
+					setStore({ isAuthenticate: true });
+				} else {
+					setStore({ isAuthenticate: false });
+				}
 			}
 		}
 	};
