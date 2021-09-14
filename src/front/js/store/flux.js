@@ -98,6 +98,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.then(data => setStore({ message: data.msg }))
 					.catch(error => console.error("[error when recovery password]", error));
+			},
+			register: (email, password, country) => {
+				const store = getStore();
+				fetch(`${store.api}/api/register`, {
+					method: "POST",
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify({
+						email: email,
+						password: password,
+						country: country
+					})
+				})
+					.then(resp => {
+						if (resp.ok) {
+							return resp.json();
+						}
+					})
+					.then(data => setStore({ message: data.msg }))
+					.catch(error => console.error("[error when register]", error));
 			}
 		}
 	};

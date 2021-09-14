@@ -14,9 +14,12 @@ export const Navbar = () => {
 				{store.isAuthenticate ? (
 					<button onClick={() => actions.signOut()}>Cerrar sesión</button>
 				) : (
-					<p>Iniciar sesión</p>
+					<span className="navbar-item">Iniciar sesión</span>
 				)}
 			</div>
+			<Link to="/register">
+				<span className="navbar-item">Registrarse</span>
+			</Link>
 		</nav>
 	);
 };

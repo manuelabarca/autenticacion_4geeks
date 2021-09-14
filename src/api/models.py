@@ -7,7 +7,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    country = db.Column(db.String(120), unique=False, nullable=False)
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -23,8 +23,8 @@ class User(db.Model):
         user = User.query.filter_by(email=email, password=password).first()
         return user
 
-    def create(email, password, is_active):
-        user = User(email=email, password=password, is_active=is_active)
+    def create(email, password, country):
+        user = User(email=email, password=password, country=country)
         db.session.add(user)
         db.session.commit()
 
