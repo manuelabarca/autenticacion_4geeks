@@ -14,7 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			api: "https://3001-yellow-tiger-u31dvvqm.ws-us16.gitpod.io",
+			api: "https://3001-white-jellyfish-j7aauqiy.ws-us15.gitpod.io",
 			isAuthenticate: false
 		},
 		actions: {
@@ -79,6 +79,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					setStore({ isAuthenticate: false });
 				}
+			},
+			forgotPassword: email => {
+				const store = getStore();
+				fetch(`${store.api}/forgot-password`, {
+					method: "POST",
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify({
+						email: email
+					})
+				})
+					.then(resp => {
+						if (resp.ok) {
+							return resp.json();
+						}
+					})
+					.then(data => setStore({ message: data.msg }))
+					.catch(error => console.error("[error when recovery password]", error));
 			}
 		}
 	};
